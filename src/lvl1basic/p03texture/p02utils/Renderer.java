@@ -4,12 +4,7 @@ import com.jogamp.opengl.GL2GL3;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
 
-import oglutils.OGLBuffers;
-import oglutils.OGLTextRenderer;
-import oglutils.OGLTexture2D;
-import oglutils.OGLUtils;
-import oglutils.ShaderUtils;
-import oglutils.ToFloatArray;
+import oglutils.*;
 
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -38,10 +33,10 @@ public class Renderer implements GLEventListener, MouseListener,
 	int width, height, ox, oy;
 
 	OGLBuffers buffers;
-	OGLTextRenderer textRenderer;
+	//OGLTextRenderer textRenderer;
 
 	int shaderProgram, locMat;
-	
+
 	OGLTexture2D texture;
 
 	Camera cam = new Camera();
@@ -52,13 +47,14 @@ public class Renderer implements GLEventListener, MouseListener,
 	public void init(GLAutoDrawable glDrawable) {
 		// check whether shaders are supported
 		OGLUtils.shaderCheck(glDrawable.getGL().getGL2GL3());
-		
-		glDrawable.setGL(OGLUtils.getDebugGL(glDrawable.getGL()));
+
+		// PROBLEMS WITH DEBUG
+		//glDrawable.setGL(OGLUtils.getDebugGL(glDrawable.getGL()));
 		GL2GL3 gl = glDrawable.getGL().getGL2GL3();
 		
 		OGLUtils.printOGLparameters(gl);
 
-		textRenderer = new OGLTextRenderer(gl, glDrawable.getSurfaceWidth(), glDrawable.getSurfaceHeight());
+		//textRenderer = new OGLTextRenderer(gl, glDrawable.getSurfaceWidth(), glDrawable.getSurfaceHeight());
 		
 		// shader files are in /shaders/ directory
 		// shaders directory must be set as a source directory of the project
@@ -163,8 +159,8 @@ public class Renderer implements GLEventListener, MouseListener,
 		
 		String text = new String(this.getClass().getName() + ": [LMB] camera, WSAD");
 		
-		textRenderer.drawStr2D(3, height-20, text);
-		textRenderer.drawStr2D(width-90, 3, " (c) PGRF UHK");
+		//textRenderer.drawStr2D(3, height-20, text);
+		//textRenderer.drawStr2D(width-90, 3, " (c) PGRF UHK");
 	}
 
 	@Override
@@ -173,7 +169,7 @@ public class Renderer implements GLEventListener, MouseListener,
 		this.width = width;
 		this.height = height;
 		proj = new Mat4PerspRH(Math.PI / 4, height / (double) width, 0.01, 1000.0);
-		textRenderer.updateSize(width, height);
+		//textRenderer.updateSize(width, height);
 	}
 
 	@Override

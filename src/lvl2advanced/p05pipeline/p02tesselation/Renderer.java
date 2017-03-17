@@ -36,7 +36,7 @@ public class Renderer implements GLEventListener, MouseListener,
 	int width, height;
 
 	OGLBuffers buffers;
-	OGLTextRenderer textRenderer;
+	//OGLTextRenderer textRenderer;
 	
 	int shaderProgram, locTime;
 
@@ -51,12 +51,12 @@ public class Renderer implements GLEventListener, MouseListener,
 		// check whether shaders are supported
 		OGLUtils.shaderCheck(glDrawable.getGL().getGL2GL3());
 		
-		glDrawable.setGL(OGLUtils.getDebugGL(glDrawable.getGL()));
+		//glDrawable.setGL(OGLUtils.getDebugGL(glDrawable.getGL()));
 		GL2GL3 gl = glDrawable.getGL().getGL2GL3();
 	
 		OGLUtils.printOGLparameters(gl);
 		OGLUtils.shaderCheck(gl);
-		textRenderer = new OGLTextRenderer(gl, glDrawable.getSurfaceWidth(), glDrawable.getSurfaceHeight());
+		//textRenderer = new OGLTextRenderer(gl, glDrawable.getSurfaceWidth(), glDrawable.getSurfaceHeight());
 		
 		if (OGLUtils.getVersionGLSL(gl) >= TESSELATION_SUPPORT_VERSION) {
 			int[] maxPatchVertices = new int[1];
@@ -215,8 +215,8 @@ public class Renderer implements GLEventListener, MouseListener,
 		
 		if (stop) text += " [S]tart";
 		else text += " [S]top";
-		textRenderer.drawStr2D(3, height-20, text);
-		textRenderer.drawStr2D(width-90, 3, " (c) PGRF UHK");
+		//textRenderer.drawStr2D(3, height-20, text);
+		//textRenderer.drawStr2D(width-90, 3, " (c) PGRF UHK");
 	}
 
 	@Override
@@ -224,7 +224,7 @@ public class Renderer implements GLEventListener, MouseListener,
 			int height) {
 		this.width = width;
 		this.height = height;
-		textRenderer.updateSize(width, height);
+		//textRenderer.updateSize(width, height);
 	}
 
 	@Override

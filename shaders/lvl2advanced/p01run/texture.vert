@@ -1,4 +1,4 @@
-#version 330
+#version 410 core
 in vec3 inPosition;
 in vec3 inNormal;
 out vec3 vertColor;

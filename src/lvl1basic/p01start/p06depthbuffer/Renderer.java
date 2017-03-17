@@ -30,7 +30,7 @@ public class Renderer implements GLEventListener, MouseListener,
 	int width, height;
 
 	OGLBuffers buffers, buffers2;
-	OGLTextRenderer textRenderer;
+	//OGLTextRenderer textRenderer;
 	
 	int shaderProgram, shaderProgram2, locTime, locTime2;
 
@@ -46,7 +46,7 @@ public class Renderer implements GLEventListener, MouseListener,
 		
 		OGLUtils.printOGLparameters(gl);
 
-		textRenderer = new OGLTextRenderer(gl, glDrawable.getSurfaceWidth(), glDrawable.getSurfaceHeight());
+		//textRenderer = new OGLTextRenderer(gl, glDrawable.getSurfaceWidth(), glDrawable.getSurfaceHeight());
 		
 		// shader files are in /shaders/ directory
 		// shaders directory must be set as a source directory of the project
@@ -122,8 +122,8 @@ public class Renderer implements GLEventListener, MouseListener,
 		buffers2.draw(GL2GL3.GL_TRIANGLES, shaderProgram2);
 		
 		String text = new String(this.getClass().getName());
-		textRenderer.drawStr2D(3, height - 20, text);
-		textRenderer.drawStr2D(width - 90, 3, " (c) PGRF UHK");
+		//textRenderer.drawStr2D(3, height - 20, text);
+		//textRenderer.drawStr2D(width - 90, 3, " (c) PGRF UHK");
 
 	}
 
@@ -132,7 +132,7 @@ public class Renderer implements GLEventListener, MouseListener,
 			int height) {
 		this.width = width;
 		this.height = height;
-		textRenderer.updateSize(width, height);
+		//textRenderer.updateSize(width, height);
 	}
 
 	@Override

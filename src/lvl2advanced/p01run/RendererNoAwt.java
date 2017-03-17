@@ -52,7 +52,7 @@ public class RendererNoAwt implements GLEventListener, MouseListener,
 		// check whether shaders are supported
 		OGLUtils.shaderCheck(glDrawable.getGL().getGL2GL3());
 		
-		glDrawable.setGL(OGLUtils.getDebugGL(glDrawable.getGL()));
+		//glDrawable.setGL(OGLUtils.getDebugGL(glDrawable.getGL()));
 		GL2GL3 gl = glDrawable.getGL().getGL2GL3();
 
 		// jogl parameters

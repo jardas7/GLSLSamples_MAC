@@ -33,7 +33,7 @@ public class Renderer implements GLEventListener, MouseListener,
 	int width, height;
 
 	OGLBuffers buffers;
-	OGLTextRenderer textRenderer;
+	//OGLTextRenderer textRenderer;
 	int shaderProgram, locMode, computeShaderProgram;
 
 	OGLTexture2D.Viewer textureViewer;
@@ -52,10 +52,10 @@ public class Renderer implements GLEventListener, MouseListener,
 			System.exit(0);
 		}
 		
-		glDrawable.setGL(new DebugGL4(glDrawable.getGL().getGL4()));
+		//glDrawable.setGL(new DebugGL4(glDrawable.getGL().getGL4()));
 		GL4 gl = glDrawable.getGL().getGL4();
 	
-		textRenderer = new OGLTextRenderer(gl, glDrawable.getSurfaceWidth(), glDrawable.getSurfaceHeight());
+		//textRenderer = new OGLTextRenderer(gl, glDrawable.getSurfaceWidth(), glDrawable.getSurfaceHeight());
 		
 		shaderProgram = ShaderUtils.loadProgram(gl, "/lvl2advanced/p06compute/p01intro/drawImage"); 
 		computeShaderProgram = ShaderUtils.loadProgram(gl, null, null, null, null, null, 
@@ -138,8 +138,8 @@ public class Renderer implements GLEventListener, MouseListener,
 		
 		String text = new String(this.getClass().getName() + " [m]ode: " + mode);
 		
-		textRenderer.drawStr2D(3, height-20, text);
-		textRenderer.drawStr2D(width-90, 3, " (c) PGRF UHK");
+		//textRenderer.drawStr2D(3, height-20, text);
+		//textRenderer.drawStr2D(width-90, 3, " (c) PGRF UHK");
 
 	}
 
@@ -148,7 +148,7 @@ public class Renderer implements GLEventListener, MouseListener,
 			int height) {
 		this.width = width;
 		this.height = height;
-		textRenderer.updateSize(width, height);
+		//textRenderer.updateSize(width, height);
 	}
 
 	@Override

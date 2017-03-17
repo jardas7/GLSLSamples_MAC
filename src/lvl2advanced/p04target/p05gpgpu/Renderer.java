@@ -36,7 +36,7 @@ public class Renderer implements GLEventListener, MouseListener,
 	int width, height, ox, oy;
 
 	OGLBuffers buffers;
-	OGLTextRenderer textRenderer;
+	//OGLTextRenderer textRenderer;
 
 	int shaderProgram;
 
@@ -58,11 +58,11 @@ public class Renderer implements GLEventListener, MouseListener,
 		// check whether shaders are supported
 		OGLUtils.shaderCheck(glDrawable.getGL().getGL2GL3());
 		
-		glDrawable.setGL(OGLUtils.getDebugGL(glDrawable.getGL()));
+		//glDrawable.setGL(OGLUtils.getDebugGL(glDrawable.getGL()));
 		GL2GL3 gl = glDrawable.getGL().getGL2GL3();
 
 		OGLUtils.printOGLparameters(gl);
-		textRenderer = new OGLTextRenderer(gl, glDrawable.getSurfaceWidth(), glDrawable.getSurfaceHeight());
+		//textRenderer = new OGLTextRenderer(gl, glDrawable.getSurfaceWidth(), glDrawable.getSurfaceHeight());
 		
 		shaderProgram = ShaderUtils.loadProgram(gl, "/lvl2advanced/p04target/p05gpgpu/gpgpuRoll");
 		//shaderProgram = ShaderUtils.loadProgram(gl, "/lvl2advanced/p04target/p05gpgpu/gpgpuMax");
@@ -162,15 +162,15 @@ public class Renderer implements GLEventListener, MouseListener,
 
 		String text = new String(this.getClass().getName() + ": [I]nit");
 		
-		textRenderer.drawStr2D(3, height-20, text);
-		textRenderer.drawStr2D(width-90, 3, " (c) PGRF UHK");
+		//textRenderer.drawStr2D(3, height-20, text);
+		//textRenderer.drawStr2D(width-90, 3, " (c) PGRF UHK");
 	}
 
 	public void reshape(GLAutoDrawable drawable, int x, int y, int width,
 			int height) {
 		this.width = width;
 		this.height = height;
-		textRenderer.updateSize(width, height);
+		//textRenderer.updateSize(width, height);
 	}
 
 	public void displayChanged(GLAutoDrawable drawable, boolean modeChanged,

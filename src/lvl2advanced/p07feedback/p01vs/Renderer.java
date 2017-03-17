@@ -37,7 +37,7 @@ public class Renderer implements GLEventListener, MouseListener,
 	float time = 0;
 
 	OGLBuffers buffers;
-	OGLTextRenderer textRenderer;
+	//OGLTextRenderer textRenderer;
 	
 	int shaderProgram, shaderProgramPre;
 	int[] buffer_name;
@@ -53,10 +53,10 @@ public class Renderer implements GLEventListener, MouseListener,
 			System.exit(0);
 		}
 				
-		glDrawable.setGL(OGLUtils.getDebugGL(glDrawable.getGL()));
+		//glDrawable.setGL(OGLUtils.getDebugGL(glDrawable.getGL()));
 		GL2GL3 gl = glDrawable.getGL().getGL2GL3();
 		
-		textRenderer = new OGLTextRenderer(gl, glDrawable.getSurfaceWidth(), glDrawable.getSurfaceHeight());
+		//textRenderer = new OGLTextRenderer(gl, glDrawable.getSurfaceWidth(), glDrawable.getSurfaceHeight());
 		
 		shaderProgramPre = ShaderUtils.loadProgram(gl, "/lvl2advanced/p07feedback/p01vs/feedbackVS");
 		shaderProgram = ShaderUtils.loadProgram(gl, "/lvl2advanced/p07feedback/p01vs/feedbackDraw");
@@ -176,8 +176,8 @@ public class Renderer implements GLEventListener, MouseListener,
 		
 		String text = new String(this.getClass().getName() + " transform feedback, see console output");
 		
-		textRenderer.drawStr2D(3, height-20, text);
-		textRenderer.drawStr2D(width-90, 3, " (c) PGRF UHK");
+		//textRenderer.drawStr2D(3, height-20, text);
+		//textRenderer.drawStr2D(width-90, 3, " (c) PGRF UHK");
 
 	}
 	
@@ -186,7 +186,7 @@ public class Renderer implements GLEventListener, MouseListener,
 			int height) {
 		this.width = width;
 		this.height = height;
-		textRenderer.updateSize(width, height);
+		//textRenderer.updateSize(width, height);
 	}
 
 	@Override

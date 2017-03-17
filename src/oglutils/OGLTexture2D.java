@@ -136,7 +136,7 @@ public class OGLTexture2D implements OGLTexture {
 			try {
 				InputStream is = OGLTexture2D.class.getResourceAsStream(fileName);
 				//there are some problems on Mac OS with mipmap, in this case set false
-				TextureData data = TextureIO.newTextureData(glProfile, is, true,
+				TextureData data = TextureIO.newTextureData(glProfile, is, false,
 						getExtension(fileName));
 				is.close();
 				System.out.println(" ... OK");

@@ -59,6 +59,8 @@ public class Renderer implements GLEventListener, MouseListener,
 		// get context of GL
 		GL2GL3 gl = glDrawable.getGL().getGL2GL3();
 
+
+		// USAGE of GL2. Need to cast it to newer version.
 		
 		switch (debugMode) { 
 		case DEBUG: 

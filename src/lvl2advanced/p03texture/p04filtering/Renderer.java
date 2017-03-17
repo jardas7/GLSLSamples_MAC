@@ -39,7 +39,7 @@ public class Renderer implements GLEventListener, MouseListener, MouseMotionList
 	int width, height, ox, oy;
 
 	OGLBuffers buffers;
-	OGLTextRenderer textRenderer;
+	//OGLTextRenderer textRenderer;
 
 	int shaderProgram, locMat;
 
@@ -60,12 +60,12 @@ public class Renderer implements GLEventListener, MouseListener, MouseMotionList
 		// check whether shaders are supported
 		OGLUtils.shaderCheck(glDrawable.getGL().getGL2GL3());
 		
-		glDrawable.setGL(OGLUtils.getDebugGL(glDrawable.getGL()));
+		//glDrawable.setGL(OGLUtils.getDebugGL(glDrawable.getGL()));
 		GL2GL3 gl = glDrawable.getGL().getGL2GL3();
 
 		OGLUtils.printOGLparameters(gl);
 
-		textRenderer = new OGLTextRenderer(gl, glDrawable.getSurfaceWidth(), glDrawable.getSurfaceHeight());
+		//textRenderer = new OGLTextRenderer(gl, glDrawable.getSurfaceWidth(), glDrawable.getSurfaceHeight());
 		
 		shaderProgram = ShaderUtils.loadProgram(gl, "/lvl2advanced/p03texture/p04filtering/textureInterpolation");
 		createBuffers(gl);
@@ -251,8 +251,8 @@ public class Renderer implements GLEventListener, MouseListener, MouseMotionList
 		for(int i= 0; i<8; i++)
 			textureViewer.view(textureGrid, -1, i*0.25-1, 0.25, 1.0, i);
 		
-		textRenderer.drawStr2D(3, height - 20, text);
-		textRenderer.drawStr2D(width - 90, 3, " (c) PGRF UHK");
+		//textRenderer.drawStr2D(3, height - 20, text);
+		//textRenderer.drawStr2D(width - 90, 3, " (c) PGRF UHK");
 	}
 
 	@Override
@@ -260,7 +260,7 @@ public class Renderer implements GLEventListener, MouseListener, MouseMotionList
 		this.width = width;
 		this.height = height;
 		proj = new Mat4PerspRH(Math.PI / 0.6, height / (double) width, 0.01, 20.0);
-		textRenderer.updateSize(width, height);
+		//textRenderer.updateSize(width, height);
 	}
 
 	@Override

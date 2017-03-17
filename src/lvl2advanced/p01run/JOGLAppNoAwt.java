@@ -18,7 +18,7 @@ public class JOGLAppNoAwt { // Renderer
 		// Get the default OpenGL profile, reflecting the best for your running platform
 		// GLProfile glp = GLProfile. getDefault();
 		// or choose platform
-		GLProfile glp = GLProfile.get(GLProfile.GL2);
+		GLProfile glp = GLProfile.get(GLProfile.GL2GL3);
 		// Specifies a set of OpenGL capabilities, based on your profile.
 		GLCapabilities caps = new GLCapabilities(glp);
 		// Create the OpenGL rendering canvas
