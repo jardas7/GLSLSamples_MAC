@@ -37,11 +37,11 @@ public class Renderer implements GLEventListener, MouseListener,
 
 	int shaderProgram, locMat;
 
-	OGLTexture2D texture;
+	OGLTexture texture;
 
 	Camera cam = new Camera();
 	Mat4 proj;
-	OGLTexture2D.Viewer textureViewer;
+	OGLTexture.Viewer textureViewer;
 	
 	@Override
 	public void init(GLAutoDrawable glDrawable) {
@@ -49,13 +49,13 @@ public class Renderer implements GLEventListener, MouseListener,
 		OGLUtils.shaderCheck(glDrawable.getGL().getGL2GL3());
 
 		// PROBLEMS WITH DEBUG
-		//glDrawable.setGL(OGLUtils.getDebugGL(glDrawable.getGL()));
+		//glDrawable.setGL(OGLUtils.getDebugGL(glDrawable));
 		GL2GL3 gl = glDrawable.getGL().getGL2GL3();
 		
 		OGLUtils.printOGLparameters(gl);
 
 		//textRenderer = new OGLTextRenderer(gl, glDrawable.getSurfaceWidth(), glDrawable.getSurfaceHeight());
-		
+
 		// shader files are in /shaders/ directory
 		// shaders directory must be set as a source directory of the project
 		// e.g. in Eclipse via main menu Project/Properties/Java Build Path/Source
@@ -146,8 +146,8 @@ public class Renderer implements GLEventListener, MouseListener,
 		
 		gl.glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		gl.glClear(GL2GL3.GL_COLOR_BUFFER_BIT | GL2GL3.GL_DEPTH_BUFFER_BIT);
-		
-		gl.glUseProgram(shaderProgram); 
+
+		gl.glUseProgram(shaderProgram);
 		gl.glUniformMatrix4fv(locMat, 1, false,
 				ToFloatArray.convert(cam.getViewMatrix().mul(proj)), 0);
 		
@@ -158,7 +158,7 @@ public class Renderer implements GLEventListener, MouseListener,
 		textureViewer.view(texture, -1, -1, 0.5);
 		
 		String text = new String(this.getClass().getName() + ": [LMB] camera, WSAD");
-		
+
 		//textRenderer.drawStr2D(3, height-20, text);
 		//textRenderer.drawStr2D(width-90, 3, " (c) PGRF UHK");
 	}

@@ -22,7 +22,7 @@ public class JOGLApp {
 			testFrame.setSize(512, 384);
 
 			// setup OpenGL version
-	    	GLProfile profile = GLProfile.getMaximum(true);
+	    	GLProfile profile = GLProfile.getGL4ES3();
 	    	GLCapabilities capabilities = new GLCapabilities(profile);
 	    	
 	    	// The canvas is the widget that's drawn in the JFrame

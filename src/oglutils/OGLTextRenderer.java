@@ -6,6 +6,7 @@ import java.awt.Font;
 import com.jogamp.opengl.GL2GL3;
 import com.jogamp.opengl.util.awt.TextRenderer;
 
+
 public class OGLTextRenderer {
 	private final GL2GL3 gl;
 	private final TextRenderer renderer;
@@ -69,7 +70,7 @@ public class OGLTextRenderer {
 	/**
 	 * Draw string on 2D coordinates of the raster frame
 	 * 
-	 * @param gl
+	 * @param
 	 * @param x
 	 *            x position of string in range <0, width-1> of raster frame
 	 * @param y
@@ -84,13 +85,13 @@ public class OGLTextRenderer {
 		gl.glViewport(0, 0, width, height);
 		gl.glPolygonMode(GL2GL3.GL_FRONT_AND_BACK, GL2GL3.GL_FILL);
 		gl.glActiveTexture(GL2GL3.GL_TEXTURE0);
-		
-		renderer.setColor(color);
 
-		renderer.beginRendering(width, height);
+		renderer.beginRendering(x, y);
+		//renderer.setColor(Color.WHITE);
+
 		renderer.draw(s, x, y);
-		
 		renderer.endRendering();
+
 	}
 
 	@Override

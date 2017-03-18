@@ -1,6 +1,7 @@
 package lvl1basic.p00.p01withoutShaders;
 
 import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.GL2GL3;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
 
@@ -28,32 +29,32 @@ public class Renderer implements GLEventListener, MouseListener,
 
 	@Override
 	public void init(GLAutoDrawable glDrawable) {
-		GL2 gl = glDrawable.getGL().getGL2();
+		GL2GL3 gl = glDrawable.getGL().getGL2GL3();
 
 		System.out.println("Init GL is " + gl.getClass().getName());
-		System.out.println("OpenGL version " + gl.glGetString(GL2.GL_VERSION));
-		System.out.println("OpenGL vendor " + gl.glGetString(GL2.GL_VENDOR));
+		System.out.println("OpenGL version " + gl.glGetString(GL2GL3.GL_VERSION));
+		System.out.println("OpenGL vendor " + gl.glGetString(GL2GL3.GL_VENDOR));
 		System.out
-				.println("OpenGL renderer " + gl.glGetString(GL2.GL_RENDERER));
+				.println("OpenGL renderer " + gl.glGetString(GL2GL3.GL_RENDERER));
 		System.out.println("OpenGL extension "
-				+ gl.glGetString(GL2.GL_EXTENSIONS));
+				+ gl.glGetString(GL2GL3.GL_EXTENSIONS));
 
 	}
 	
 	@Override
 	public void display(GLAutoDrawable glDrawable) {
-		GL2 gl = glDrawable.getGL().getGL2();
+		GL2GL3 gl = glDrawable.getGL().getGL2GL3();
 		gl.glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-		gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
+		gl.glClear(GL2GL3.GL_COLOR_BUFFER_BIT | GL2GL3.GL_DEPTH_BUFFER_BIT);
 
 		gl.glUseProgram(0);
 
 		//rendering triangle by fixed pipeline
-		gl.glBegin(GL2.GL_TRIANGLES);
-		gl.glVertex2f(-1f, -1);
-		gl.glVertex2f(1, 0);
-		gl.glVertex2f(0, 1);
-		gl.glEnd();
+		//gl.glBegin(GL2.GL_TRIANGLES);
+		//gl.glVertex2f(-1f, -1);
+		//gl.glVertex2f(1, 0);
+		//gl.glVertex2f(0, 1);
+		//gl.glEnd();
 
 	}
 
