@@ -1,9 +1,11 @@
 package oglutils;
 
 
+import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 import transforms.Mat4Scale;
 import transforms.Mat4Transl;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -272,7 +274,7 @@ public class OGLTexture2D implements OGLTexture {
 		int[] array = new int[getWidth() * getHeight()];
 		bind();
 		gl.glGetTexImage(GL2GL3.GL_TEXTURE_2D, 0, GL2GL3.GL_RGBA, GL2GL3.GL_UNSIGNED_BYTE, IntBuffer.wrap(array));
-		BufferedImage image = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+		BufferedImage image = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
 		image.setRGB(0, 0, getWidth(), getHeight(), array, 0, getWidth());
 		return image;
 	}
@@ -283,6 +285,7 @@ public class OGLTexture2D implements OGLTexture {
 		img.getRGB(0, 0, getWidth(), getHeight(), array, 0, getWidth());
 		gl.glTexSubImage2D(GL2GL3.GL_TEXTURE_2D, 0, 0, 0, getWidth(), getHeight(), GL2GL3.GL_RGBA,
 				GL2GL3.GL_UNSIGNED_INT_8_8_8_8_REV, IntBuffer.wrap(array));
+		System.out.println("prevadim");
 	}
 
 	@Override

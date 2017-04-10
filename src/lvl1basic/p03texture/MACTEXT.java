@@ -60,7 +60,7 @@ package lvl1basic.p03texture;
 public class MACTEXT implements GLEventListener {
     public static void main(String[] args) {
         Frame frame = new Frame("Text Renderer Test");
-        GLCapabilities caps = new GLCapabilities(GLProfile.getGL2ES1());
+        GLCapabilities caps = new GLCapabilities(GLProfile.getGL2GL3());
         caps.setAlphaBits(8);
         GLCanvas canvas = new GLCanvas(caps);
         canvas.addGLEventListener(new MACTEXT());

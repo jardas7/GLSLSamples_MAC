@@ -14,13 +14,13 @@ import oglutils.OGLUtils;
 import oglutils.ShaderUtils;
 import oglutils.ToFloatArray;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 import transforms.Camera;
@@ -30,14 +30,14 @@ import transforms.Mat4Scale;
 import transforms.Vec3D;
 
 /**
-* Ukazka pro praci s shadery v GLSL:
-* vytvoreni renderTargetu pro ulozeni barvy pristup pres BufferedImage a Graphics
-* upraveno pro JOGL 2.3.0 a vyssi
-* 
-* @author PGRF FIM UHK
-* @version 2.0
-* @since   2015-11-24 
-*/
+ * Ukazka pro praci s shadery v GLSL:
+ * vytvoreni renderTargetu pro ulozeni barvy pristup pres BufferedImage a Graphics
+ * upraveno pro JOGL 2.3.0 a vyssi
+ *
+ * @author PGRF FIM UHK
+ * @version 2.0
+ * @since   2015-11-24
+ */
 
 public class Renderer implements GLEventListener, MouseListener,
 		MouseMotionListener, KeyListener {
@@ -58,19 +58,19 @@ public class Renderer implements GLEventListener, MouseListener,
 	boolean draw = false;
 	OGLTexture2D texRGB;
 	OGLTexture2D.Viewer textureViewer;
-	
+
 	@Override
 	public void init(GLAutoDrawable glDrawable) {
 		// check whether shaders are supported
 		OGLUtils.shaderCheck(glDrawable.getGL().getGL2GL3());
-		
+
 		//glDrawable.setGL(OGLUtils.getDebugGL(glDrawable.getGL()));
 		GL2GL3 gl = glDrawable.getGL().getGL2GL3();
 
 		OGLUtils.printOGLparameters(gl);
 
 		//textRenderer = new OGLTextRenderer(gl, glDrawable.getSurfaceWidth(), glDrawable.getSurfaceHeight());
-		
+
 		shaderProgram = ShaderUtils.loadProgram(gl, "/lvl2advanced/p04target/p03bufferedimage/texture");
 
 		createBuffers(gl);
@@ -136,7 +136,7 @@ public class Renderer implements GLEventListener, MouseListener,
 				new OGLBuffers.Attrib("inPosition", 3),
 				new OGLBuffers.Attrib("inNormal", 3)
 		};
-		
+
 		buffers = new OGLBuffers(gl, cube, attributes, indexBufferData);
 
 	}
@@ -162,7 +162,7 @@ public class Renderer implements GLEventListener, MouseListener,
 
 		// ziskani kontextu textury
 		textureColor = renderTarget.getColorTexture();
-		
+
 		if (!draw) {
 			draw = true;
 
@@ -175,16 +175,38 @@ public class Renderer implements GLEventListener, MouseListener,
 			// prevod na BufferedImage
 			BufferedImage img = texRGB.toBufferedImage();
 			// vykresleni
-			Graphics gr = img.getGraphics();
+			Graphics graph = img.getGraphics();
+			Graphics2D gr = (Graphics2D) graph;
 			gr.setColor(new Color(0xffff));
 			gr.fillOval(0, 0, width / 10, height / 10);
 			gr.setColor(new Color(0xff00ff));
 			gr.drawLine(width / 2, 0, 0, height / 2);
 			gr.setColor(new Color(0xffffff));
 			gr.drawRect(100, 100, 200, 200);
+
+
+			gr.setFont(new Font( "arial", Font.BOLD, 80));
+			if (System.getProperty("os.name").startsWith("Mac")) {
+				AffineTransform at = new AffineTransform();
+				at.rotate(-Math.PI /2, texRGB.getWidth()/2, texRGB.getHeight()/2);
+				//at.scale(-texRGB.getWidth()/2, texRGB.getHeight()/2);
+				at.translate(texRGB.getWidth()/2, 0);
+				at.scale(-1, 1);
+				at.translate(-texRGB.getWidth()/2, 0);
+
+				at.rotate(Math.PI /2, texRGB.getWidth()/2, texRGB.getHeight()/2);
+				//gr.rotate(Math.PI / 2, texRGB.getWidth()/2, texRGB.getHeight()/2);
+				gr.setTransform(at);
+				gr.drawString("text", 200, 200);
+
+			} else {
+				gr.drawString("text", texRGB.getWidth()/2, texRGB.getHeight()/2);
+			}
+
+
 			// ulozeni dat do textury
 			texRGB.fromBufferedImage(img);
-	
+
 		}
 
 		// nastavime vychozi render target
@@ -200,28 +222,29 @@ public class Renderer implements GLEventListener, MouseListener,
 		texRGB.bind(shaderProgram, "textureID", 0);
 		//renderTarget.bindDepthTexture(shaderProgram, "textureID", 0);
 
-		
+
 		gl.glUniformMatrix4fv(locMat, 1, false,
 				ToFloatArray.convert(cam.getViewMatrix().mul(proj)), 0);
 
 		buffers.draw(GL2GL3.GL_TRIANGLES, shaderProgram);
 
 		gl.glUseProgram(0); // bez shaderu
-		
-		textureViewer.view(texRGB, -1, -1, 0.5, height / (double) width);
-		
+
+		textureViewer.view(texRGB, -1, -1, 1.5, height / (double) width);
+
 		String text = new String(this.getClass().getName() + ": [LMB] camera, WSAD");
-		
+
 		//textRenderer.drawStr2D(3, height-20, text);
 		//textRenderer.drawStr2D(width-90, 3, " (c) PGRF UHK");
 	}
 
 	@Override
 	public void reshape(GLAutoDrawable drawable, int x, int y, int width,
-			int height) {
+						int height) {
 		this.width = width;
 		this.height = height;
 		proj = new Mat4PerspRH(Math.PI / 4, height / (double) width, 1.0, 100.0);
+		System.out.println(width);
 		//textRenderer.updateSize(width, height);
 	}
 
@@ -262,36 +285,36 @@ public class Renderer implements GLEventListener, MouseListener,
 	@Override
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
-		case KeyEvent.VK_W:
-			cam = cam.forward(1);
-			break;
-		case KeyEvent.VK_D:
-			cam = cam.right(1);
-			break;
-		case KeyEvent.VK_S:
-			cam = cam.backward(1);
-			break;
-		case KeyEvent.VK_A:
-			cam = cam.left(1);
-			break;
-		case KeyEvent.VK_CONTROL:
-			cam = cam.down(1);
-			break;
-		case KeyEvent.VK_SHIFT:
-			cam = cam.up(1);
-			break;
-		case KeyEvent.VK_SPACE:
-			cam = cam.withFirstPerson(!cam.getFirstPerson());
-			break;
-		case KeyEvent.VK_R:
-			cam = cam.mulRadius(0.9f);
-			break;
-		case KeyEvent.VK_F:
-			cam = cam.mulRadius(1.1f);
-			break;
-		case KeyEvent.VK_N:
-			draw = false;
-			break;
+			case KeyEvent.VK_W:
+				cam = cam.forward(1);
+				break;
+			case KeyEvent.VK_D:
+				cam = cam.right(1);
+				break;
+			case KeyEvent.VK_S:
+				cam = cam.backward(1);
+				break;
+			case KeyEvent.VK_A:
+				cam = cam.left(1);
+				break;
+			case KeyEvent.VK_CONTROL:
+				cam = cam.down(1);
+				break;
+			case KeyEvent.VK_SHIFT:
+				cam = cam.up(1);
+				break;
+			case KeyEvent.VK_SPACE:
+				cam = cam.withFirstPerson(!cam.getFirstPerson());
+				break;
+			case KeyEvent.VK_R:
+				cam = cam.mulRadius(0.9f);
+				break;
+			case KeyEvent.VK_F:
+				cam = cam.mulRadius(1.1f);
+				break;
+			case KeyEvent.VK_N:
+				draw = false;
+				break;
 		}
 	}
 
