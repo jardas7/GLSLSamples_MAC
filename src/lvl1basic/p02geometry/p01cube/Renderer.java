@@ -4,17 +4,15 @@ import com.jogamp.opengl.GL2GL3;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
 
-import oglutils.OGLBuffers;
-import oglutils.OGLTextRenderer;
-import oglutils.OGLUtils;
-import oglutils.ShaderUtils;
-import oglutils.ToFloatArray;
+import oglutils.*;
 
+import java.awt.*;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 
 import transforms.Camera;
 import transforms.Mat4;
@@ -37,7 +35,13 @@ public class Renderer implements GLEventListener, MouseListener,
 	int width, height, ox, oy;
 
 	OGLBuffers buffers;
+	boolean draw = false;
 	//OGLTextRenderer textRenderer;
+
+	OGLTexture2D textureColor;
+
+	OGLTexture2D texRGB;
+	OGLTexture.Viewer textureViewer;
 
 	int shaderProgram, locMat;
 
@@ -51,9 +55,8 @@ public class Renderer implements GLEventListener, MouseListener,
 		
 		glDrawable.setGL(OGLUtils.getDebugGL(glDrawable.getGL()));
 		GL2GL3 gl = glDrawable.getGL().getGL2GL3();
-		
+
 		OGLUtils.printOGLparameters(gl);
-		
 		//textRenderer = new OGLTextRenderer(gl, glDrawable.getSurfaceWidth(), glDrawable.getSurfaceHeight());
 		
 		// shader files are in /shaders/ directory
@@ -69,6 +72,9 @@ public class Renderer implements GLEventListener, MouseListener,
 				.withZenith(Math.PI * -0.125);
 		
 		gl.glEnable(GL2GL3.GL_DEPTH_TEST);
+
+		textureViewer = new OGLTexture2D.Viewer(gl);
+		textureColor = texRGB;
 	}
 
 	void createBuffers(GL2GL3 gl) {
@@ -140,7 +146,25 @@ public class Renderer implements GLEventListener, MouseListener,
 				ToFloatArray.convert(cam.getViewMatrix().mul(proj)), 0);
 		
 		buffers.draw(GL2GL3.GL_TRIANGLES, shaderProgram);
-		
+
+		if (!draw) {
+			draw = true;
+			OGLTexImageFloat imgFloat = textureColor.getTexImage(new OGLTexImageFloat.Format(4));
+			// vytvoreni klasicke textury
+			texRGB = new OGLTexture2D(gl, imgFloat.toOGLTexImageByte());
+			// prevod na BufferedImage
+			BufferedImage img = texRGB.toBufferedImage();
+			// vykresleni
+			Graphics graph = img.getGraphics();
+			Graphics2D gr = (Graphics2D) graph;
+
+			gr.setFont(new Font("arial", Font.BOLD, 80));
+			gr.drawString("text", texRGB.getWidth() / 2, texRGB.getHeight() / 2);
+
+			// ulozeni dat do textury
+			texRGB.fromBufferedImage(img);
+		}
+		textureViewer.view(texRGB, 1, 1, 0.5);
 		String text = new String(this.getClass().getName() + ": [LMB] camera, WSAD");
 		
 		//textRenderer.drawStr2D(3, height-20, text);

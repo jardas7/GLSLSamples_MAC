@@ -184,29 +184,11 @@ public class Renderer implements GLEventListener, MouseListener,
 			gr.setColor(new Color(0xffffff));
 			gr.drawRect(100, 100, 200, 200);
 
-
 			gr.setFont(new Font( "arial", Font.BOLD, 80));
-			if (System.getProperty("os.name").startsWith("Mac")) {
-				AffineTransform at = new AffineTransform();
-				at.rotate(-Math.PI /2, texRGB.getWidth()/2, texRGB.getHeight()/2);
-				//at.scale(-texRGB.getWidth()/2, texRGB.getHeight()/2);
-				at.translate(texRGB.getWidth()/2, 0);
-				at.scale(-1, 1);
-				at.translate(-texRGB.getWidth()/2, 0);
-
-				at.rotate(Math.PI /2, texRGB.getWidth()/2, texRGB.getHeight()/2);
-				//gr.rotate(Math.PI / 2, texRGB.getWidth()/2, texRGB.getHeight()/2);
-				gr.setTransform(at);
-				gr.drawString("text", 200, 200);
-
-			} else {
-				gr.drawString("text", texRGB.getWidth()/2, texRGB.getHeight()/2);
-			}
-
+			gr.drawString("text", texRGB.getWidth()/2, texRGB.getHeight()/2);
 
 			// ulozeni dat do textury
 			texRGB.fromBufferedImage(img);
-
 		}
 
 		// nastavime vychozi render target

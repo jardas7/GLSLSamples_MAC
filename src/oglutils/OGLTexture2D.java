@@ -55,13 +55,25 @@ public class OGLTexture2D implements OGLTexture {
 			};
 
 		private OGLBuffers createBuffers(GL2GL3 gl) {
-			float[] vertexBufferData = { 
-					0, 0, 0, 0, 
-					1, 0, 1, 0, 
-					0, 1, 0, 1,
-					1, 1, 1, 1 };
-			int[] indexBufferData = { 0, 1, 2, 3 };
+			float[] vertexBufferData;
+			int[] indexBufferData;
 
+			// MAC text renderer in right direction
+			if (System.getProperty("os.name").startsWith("Mac")) {
+				vertexBufferData = new float[]{
+						0, 0, 0, 1,
+						1, 0, 1, 1,
+						0, 1, 0, 0,
+						1, 1, 1, 0};
+				indexBufferData = new int[]{0, 1, 2, 3};
+			} else {
+				vertexBufferData = new float[] {
+						0, 0, 0, 0,
+						1, 0, 1, 0,
+						0, 1, 0, 1,
+						1, 1, 1, 1};
+				indexBufferData = new int[] {0, 1, 2, 3};
+			}
 			OGLBuffers.Attrib[] attributes = { new OGLBuffers.Attrib("inPosition", 2),
 					new OGLBuffers.Attrib("inTexCoord", 2) };
 
