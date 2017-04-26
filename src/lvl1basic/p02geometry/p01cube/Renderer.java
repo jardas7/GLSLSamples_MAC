@@ -147,9 +147,7 @@ public class Renderer implements GLEventListener, MouseListener,
 		
 		buffers.draw(GL2GL3.GL_TRIANGLES, shaderProgram);
 
-		if (!draw) {
-			draw = true;
-			OGLTexImageFloat imgFloat = textureColor.getTexImage(new OGLTexImageFloat.Format(4));
+			OGLTexImageFloat imgFloat = textureColor.getTexImage(new OGLTexImageFloat.Format(1));
 			// vytvoreni klasicke textury
 			texRGB = new OGLTexture2D(gl, imgFloat.toOGLTexImageByte());
 			// prevod na BufferedImage
@@ -163,7 +161,7 @@ public class Renderer implements GLEventListener, MouseListener,
 
 			// ulozeni dat do textury
 			texRGB.fromBufferedImage(img);
-		}
+
 		textureViewer.view(texRGB, 1, 1, 0.5);
 		String text = new String(this.getClass().getName() + ": [LMB] camera, WSAD");
 		
